@@ -1,0 +1,373 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* 确保body至少占满整个视口高度 */
+}
+
+header {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 0.5rem 1rem; /* 减少左右内边距 */
+    display: flex;
+    justify-content: flex-start; /* 将内容靠左对齐 */
+    align-items: center;
+    position: fixed; /* 固定在顶部 */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* 确保header在其他元素之上 */
+    height: 60px; /* 固定高度 */
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-left > div {
+    margin-right: 1rem;
+}
+
+/* 删除或注释掉以下样式
+.news-ticker {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 600px;
+    height: 30px;
+}
+
+.news-wrapper {
+    overflow: hidden;
+    width: 500px;
+}
+
+#news-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    animation: ticker-horizontal 30s linear infinite;
+    white-space: nowrap;
+}
+
+#news-list li {
+    padding: 0 20px;
+    flex-shrink: 0;
+}
+
+@keyframes ticker-horizontal {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+*/
+
+main {
+    max-width: 1200px;
+    margin: 80px auto 80px;
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: calc(100vh - 140px);
+    background-color: #f9f9f9;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.personal-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+    background-image: linear-gradient(45deg, #f3f3f3 25%, transparent 25%, transparent 75%, #f3f3f3 75%, #f3f3f3);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.image-gallery {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    height: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.info-header h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin: 0;
+    line-height: 100px; /* 确保文字垂直居中 */
+}
+
+.image-upload {
+    display: flex;
+    align-items: center;
+}
+
+.info-image {
+    margin-right: 1rem;
+}
+
+.info-image img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.upload-button {
+    text-align: center;
+}
+
+#image-upload {
+    display: none;
+}
+
+label[for="image-upload"] {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+label[for="image-upload"]:hover {
+    background-color: #2980b9;
+}
+
+.info-text {
+    width: 100%;
+    max-width: 800px;
+    text-align: justify;
+}
+
+.info-text p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    text-indent: 2em;
+    color: #333;
+}
+
+.info-image {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.info-image img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.upload-button {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+#image-upload {
+    display: none;
+}
+
+label[for="image-upload"] {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+}
+
+label[for="image-upload"]:hover {
+    background-color: #2980b9;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+    width: 100%;
+}
+
+.carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex: 0 0 100%;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: background-color 0.3s;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-icon {
+    color: #ecf0f1;
+    font-size: 1.8rem;
+    margin: 0 1rem;
+    transition: color 0.3s, transform 0.3s;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    color: #3498db;
+    transform: scale(1.2);
+}
+
+/* 为哔哩哔哩图标添加特殊样式 */
+.fa-bilibili {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.fa-bilibili::before {
+    content: "B站";
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 1rem;
+        margin: 70px auto 70px;
+    }
+
+    .personal-info {
+        padding: 1rem;
+    }
+
+    .info-text h1 {
+        font-size: 2rem;
+    }
+
+    .info-text p {
+        font-size: 0.9rem;
+    }
+
+    .info-image img {
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    .info-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .info-header h1 {
+        margin-bottom: 1rem;
+    }
+
+    .image-upload {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .info-image img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .info-text p {
+        font-size: 0.9rem;
+    }
+
+    .news-ticker {
+        width: 100%;
+    }
+
+    .news-wrapper {
+        width: calc(100% - 100px);
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .personal-info,
+    .image-gallery {
+        width: 100%;
+    }
+
+    .content-wrapper {
+        gap: 1rem;
+    }
+
+    .personal-info,
+    .image-gallery {
+        padding: 1rem;
+    }
+
+    .image-gallery {
+        height: 300px;
+    }
+
+    /* ... 其他响应式样式 ... */
+}

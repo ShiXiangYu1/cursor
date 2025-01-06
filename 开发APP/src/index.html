@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>补光相机</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 相机预览 -->
+        <div class="camera-view">
+            <video id="video" autoplay playsinline></video>
+        </div>
+
+        <!-- 控制面板 -->
+        <div class="control-panel">
+            <!-- 预设色卡 -->
+            <div class="preset-colors">
+                <button class="preset-btn" data-color="#FFE4E1" style="background: #FFE4E1">暖白</button>
+                <button class="preset-btn" data-color="#F0FFFF" style="background: #F0FFFF">冷白</button>
+                <button class="preset-btn" data-color="#FFF5E1" style="background: #FFF5E1">自然</button>
+                <button class="preset-btn" data-color="#FFD700" style="background: #FFD700">黄金</button>
+                <button class="preset-btn" data-color="#E6E6FA" style="background: #E6E6FA">紫光</button>
+            </div>
+
+            <!-- 调节滑块 -->
+            <div class="sliders">
+                <div class="slider-group">
+                    <label>亮度
+                        <input type="range" id="brightness" min="0" max="200" value="100">
+                        <span class="value">100%</span>
+                    </label>
+                </div>
+                <div class="slider-group">
+                    <label>色温
+                        <input type="range" id="temperature" min="-100" max="100" value="0">
+                        <span class="value">0</span>
+                    </label>
+                </div>
+                <div class="slider-group">
+                    <label>饱和度
+                        <input type="range" id="saturation" min="0" max="200" value="100">
+                        <span class="value">100%</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 拍照按钮 -->
+            <button id="capture-btn" class="capture-btn">
+                <span class="capture-icon"></span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const video = document.getElementById('video');
+            const captureBtn = document.getElementById('capture-btn');
+            const brightnessSlider = document.getElementById('brightness');
+            const temperatureSlider = document.getElementById('temperature');
+            const saturationSlider = document.getElementById('saturation');
+            const presetBtns = document.querySelectorAll('.preset-btn');
+
+            // 当前滤镜状态
+            let currentFilter = {
+                brightness: 100,
+                temperature: 0,
+                saturation: 100,
+                preset: null
+            };
+
+            // 初始化相机
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'environment' }
+                });
+                video.srcObject = stream;
+            } catch (err) {
+                console.error('相机访问失败:', err);
+                alert('无法访问相机，请确保已授予权限');
+            }
+
+            // 更新滤镜效果
+            function updateFilter() {
+                let filterString = `
+                    brightness(${currentFilter.brightness / 100})
+                    saturate(${currentFilter.saturation / 100})
+                `;
+
+                if (currentFilter.temperature > 0) {
+                    filterString += ` sepia(${currentFilter.temperature / 100})`;
+                } else if (currentFilter.temperature < 0) {
+                    filterString += ` hue-rotate(${currentFilter.temperature * -0.5}deg)`;
+                }
+
+                video.style.filter = filterString;
+            }
+
+            // 监听滑块变化
+            brightnessSlider.addEventListener('input', (e) => {
+                currentFilter.brightness = e.target.value;
+                e.target.nextElementSibling.textContent = `${e.target.value}%`;
+                updateFilter();
+            });
+
+            temperatureSlider.addEventListener('input', (e) => {
+                currentFilter.temperature = e.target.value;
+                e.target.nextElementSibling.textContent = e.target.value;
+                updateFilter();
+            });
+
+            saturationSlider.addEventListener('input', (e) => {
+                currentFilter.saturation = e.target.value;
+                e.target.nextElementSibling.textContent = `${e.target.value}%`;
+                updateFilter();
+            });
+
+            // 预设按钮点击事件
+            presetBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    presetBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // 应用预设效果
+                    switch(btn.textContent) {
+                        case '暖白':
+                            currentFilter = {
+                                brightness: 110,
+                                temperature: 20,
+                                saturation: 90
+                            };
+                            break;
+                        case '冷白':
+                            currentFilter = {
+                                brightness: 110,
+                                temperature: -20,
+                                saturation: 90
+                            };
+                            break;
+                        case '自然':
+                            currentFilter = {
+                                brightness: 100,
+                                temperature: 0,
+                                saturation: 100
+                            };
+                            break;
+                        case '黄金':
+                            currentFilter = {
+                                brightness: 110,
+                                temperature: 40,
+                                saturation: 120
+                            };
+                            break;
+                        case '紫光':
+                            currentFilter = {
+                                brightness: 105,
+                                temperature: -30,
+                                saturation: 110
+                            };
+                            break;
+                    }
+
+                    // 更新滑块位置
+                    brightnessSlider.value = currentFilter.brightness;
+                    temperatureSlider.value = currentFilter.temperature;
+                    saturationSlider.value = currentFilter.saturation;
+
+                    // 更新显示的值
+                    brightnessSlider.nextElementSibling.textContent = `${currentFilter.brightness}%`;
+                    temperatureSlider.nextElementSibling.textContent = currentFilter.temperature;
+                    saturationSlider.nextElementSibling.textContent = `${currentFilter.saturation}%`;
+
+                    updateFilter();
+                });
+            });
+
+            // 拍照功能
+            captureBtn.addEventListener('click', () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                
+                const ctx = canvas.getContext('2d');
+                ctx.filter = video.style.filter;
+                ctx.drawImage(video, 0, 0);
+                
+                // 保存图片
+                const link = document.createElement('a');
+                link.download = `photo-${Date.now()}.jpg`;
+                link.href = canvas.toDataURL('image/jpeg', 0.9);
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html> 

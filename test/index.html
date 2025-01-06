@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出师表 - 太原市</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <div id="date"></div>
+            <div id="weather">太原市 晴天 25°C</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="content-wrapper">
+            <section class="personal-info">
+                <div class="info-header">
+                    <h1>出师表</h1>
+                    <div class="image-upload">
+                        <div class="info-image" id="image-container" style="display: none;">
+                            <img src="" alt="个人照片" id="profile-image">
+                        </div>
+                        <div class="upload-button" id="upload-button-container">
+                            <input type="file" id="image-upload" accept="image/*">
+                            <label for="image-upload">上传图片</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-text">
+                    <p>先帝创业未半而中道崩殂，今天下三分，益州疲弊，此诚危急存亡之秋也。然侍卫之臣不懈于内，忠志之士忘身于外者，盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气，不宜妄自菲薄，引喻失义，以塞忠谏之路也。</p>
+                    <p>宫中府中，俱为一体，陟罚臧否，不宜异同。若有作奸犯科及为忠善者，宜付有司论其刑赏，以昭陛下平明之理，不宜偏私，使内外异法也。</p>
+                    <p>侍中、侍郎郭攸之、费祎、董允等，此皆良实，志虑忠纯，是以先帝简拔以遗陛下。愚以为宫中之事，事无大小，悉以咨之，然后施行，必能裨补阙漏，有所广益。</p>
+                    <p>将军向宠，性行淑均，晓畅军事，试用于昔日，先帝称之曰能，是以众议举宠为督。愚以为营中之事，悉以咨之，必能使行阵和睦，优劣得所。</p>
+                </div>
+            </section>
+
+            <section class="image-gallery">
+                <div class="carousel">
+                    <!-- 图片将由 JavaScript 动态加载 -->
+                </div>
+                <button class="prev">&#10094;</button>
+                <button class="next">&#10095;</button>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <a href="https://weixin.qq.com/" target="_blank" class="social-icon"><i class="fab fa-weixin"></i></a>
+        <a href="https://im.qq.com/index/" target="_blank" class="social-icon"><i class="fab fa-qq"></i></a>
+        <a href="https://m.weibo.cn/?standalone=1&sudaref=login.sina.com.cn" target="_blank" class="social-icon"><i class="fab fa-weibo"></i></a>
+        <a href="https://www.bilibili.com/" target="_blank" class="social-icon"><i class="fab fa-bilibili"></i></a>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
